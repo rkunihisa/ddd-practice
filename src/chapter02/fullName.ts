@@ -1,12 +1,14 @@
-import { FirstName } from "./firstName"
-import { LastName } from "./lastName";
+import { Name } from "./name"
 
 class FullName {
 
-    private firstName: FirstName;
-    private lastName: LastName;
+    private firstName: Name;
+    private lastName: Name;
 
-    constructor(firstName: FirstName, lastName: LastName) {
+    constructor(firstName: Name, lastName: Name) {
+        if (!firstName || !lastName) {
+            throw new Error("Invalid name");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
     }
