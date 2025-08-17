@@ -10,11 +10,11 @@ class UserService {
         if(this.exists(user)) {
             throw new Error("User already exists");
         }
-        //DB処理
+        //DB処理を行う
     }
 
     public exists(user: User): boolean {
-        //DB処理
+        //DB処理を行う
         return false;
     }
 }
