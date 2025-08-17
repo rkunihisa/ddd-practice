@@ -1,8 +1,8 @@
-import { User } from './user'
-import { UserName } from './userName';
-import type { UserRepositoryInterface } from './userRepositoryInterface';
+import { User } from '../model/user/user'
+import { UserName } from '../model/user/userName';
+import type { UserRepositoryInterface } from '../model/userRepositoryInterface';
 
-class UserService {
+export class UserService {
     constructor(private userRepository: UserRepositoryInterface) { }
 
     public async createUser(userName: string) {

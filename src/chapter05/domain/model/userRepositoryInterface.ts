@@ -1,5 +1,5 @@
-import { User } from '../chapter05/user';
-import { UserName } from '../chapter05/userName';
+import { User } from './user/user';
+import { UserName } from './user/userName';
 
 export interface UserRepositoryInterface {
     save(user: User): Promise<void>;
