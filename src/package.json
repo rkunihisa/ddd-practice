@@ -24,6 +24,8 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.25",
     "uuid": "^11.1.0"
   }
 }

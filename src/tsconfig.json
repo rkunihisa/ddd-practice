@@ -9,11 +9,8 @@
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
     "target": "esnext",
-    "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+    "types": ["jest", "node"],
+    "moduleResolution": "node",
 
     // Other Outputs
     "sourceMap": true,
@@ -40,5 +37,7 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-  }
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
 }
