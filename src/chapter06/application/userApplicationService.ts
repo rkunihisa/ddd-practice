@@ -4,6 +4,7 @@ import { User } from "../domain/model/user/user";
 import { UserName } from "../domain/model/user/userName";
 import { UserId } from "../domain/model/user/userId";
 import { UserDto } from "./userDto";
+import { UserUpdateCommand } from "./userUpdateCommand";
 
 export class UserApplicationService {
     private readonly userService: UserService;
@@ -32,5 +33,34 @@ export class UserApplicationService {
 
         const userDto = new UserDto(user);
         return userDto;
+    }
+
+    public async update(command: UserUpdateCommand): Promise<void> {
+        const targetId = new UserId(command.id);
+        const user = await this.userRepository.find(targetId);
+        if( user == null){
+            throw new Error("ユーザが見つかりません。");
+        }
+        const name = command.name;
+        if(name != null){
+            user.changeName(new UserName(name));
+        }
+
+        const mailAddress = command.mailAddress;
+        if(mailAddress != null){
+            user.changeMailAddress(new MailAddress(mailAddress));
+        }
+
+        await this.userRepository.save(user);
+    }
+
+    public async delete(command: UserUpdateCommand): Promise<void> {
+        const targetId = new UserId(command.id);
+        const user = await this.userRepository.find(targetId);
+        if (!user) {
+            return;
+        }
+
+        await this.userRepository.delete(user);
     }
 }
