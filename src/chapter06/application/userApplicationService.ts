@@ -1,6 +1,7 @@
 import type { UserRepositoryInterface } from "../domain/model/userRepositoryInterface";
 import { UserService } from "../domain/service/userService";
 import { User } from "../domain/model/user/user";
+import { MailAddress } from "../domain/model/user/mailAddress";
 import { UserName } from "../domain/model/user/userName";
 import { UserId } from "../domain/model/user/userId";
 import { UserDto } from "./userDto";
@@ -38,16 +39,19 @@ export class UserApplicationService {
     public async update(command: UserUpdateCommand): Promise<void> {
         const targetId = new UserId(command.id);
         const user = await this.userRepository.find(targetId);
-        if( user == null){
+        if (user == null) {
             throw new Error("ユーザが見つかりません。");
         }
         const name = command.name;
-        if(name != null){
+        if (name != null) {
             user.changeName(new UserName(name));
+            if (await this.userService.exists(user)) {
+                throw new Error("ユーザは既に存在しています。");
+            }
         }
 
         const mailAddress = command.mailAddress;
-        if(mailAddress != null){
+        if (mailAddress != null) {
             user.changeMailAddress(new MailAddress(mailAddress));
         }
 
