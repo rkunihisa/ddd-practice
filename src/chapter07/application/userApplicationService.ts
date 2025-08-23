@@ -6,15 +6,14 @@ import { UserName } from "../domain/model/user/userName";
 import { UserId } from "../domain/model/user/userId";
 import { UserDto } from "./userDto";
 import { UserUpdateCommand } from "./userUpdateCommand";
-import { ServiceLocator } from "../infrastructure/serviceLocator";
 
 export class UserApplicationService {
     private readonly userService: UserService;
     private readonly userRepository: UserRepositoryInterface;
 
-    constructor(userService: UserService) {
+    constructor(userService: UserService, userRepository: UserRepositoryInterface) {
         this.userService = userService;
-        this.userRepository = ServiceLocator.resolve<UserRepositoryInterface>("UserRepositoryInterface");
+        this.userRepository = userRepository;
     }
 
     public async register(name: string): Promise<void> {
