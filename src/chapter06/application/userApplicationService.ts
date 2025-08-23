@@ -6,13 +6,15 @@ import { UserName } from "../domain/model/user/userName";
 import { UserId } from "../domain/model/user/userId";
 import { UserDto } from "./userDto";
 import { UserUpdateCommand } from "./userUpdateCommand";
+import { inject, injectable } from "inversify";
 
+@injectable()
 export class UserApplicationService {
     private readonly userService: UserService;
     private readonly userRepository: UserRepositoryInterface;
 
-    constructor(userService: UserService, userRepository: UserRepositoryInterface) {
-        this.userService = userService;
+    constructor(@inject("UserRepositoryInterface") userRepository: UserRepositoryInterface) {
+        this.userService = new UserService(userRepository);
         this.userRepository = userRepository;
     }
 
