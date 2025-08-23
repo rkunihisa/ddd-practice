@@ -24,6 +24,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "inversify": "^7.9.0",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.25",
     "uuid": "^11.1.0"
