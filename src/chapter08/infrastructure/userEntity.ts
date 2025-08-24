@@ -1,0 +1,11 @@
+import "reflect-metadata";
+import { Entity, PrimaryColumn, Column } from "typeorm";
+
+@Entity("users")
+export class UserEntity {
+    @PrimaryColumn()
+    id!: string;
+
+    @Column()
+    name!: string;
+}
