@@ -1,5 +1,7 @@
 import { UserId } from "./userId";
 import { UserName } from "./userName";
+import { Circle } from "../circle/circle";
+import type { CircleName } from "../circle/circleName";
 
 export class User {
     private id: UserId;
@@ -29,5 +31,9 @@ export class User {
             throw new Error("Invalid user name");
         }
         this.name = newName;
+    }
+
+    createCircle(circleName: CircleName): Circle {
+        return new Circle(this.id, circleName);
     }
 }
