@@ -38,4 +38,8 @@ export class Circle {
     getMembers(): User[] {
         return this.members;
     }
+
+    addMember(user: User): void {
+        this.members.push(user);
+    }
 }
