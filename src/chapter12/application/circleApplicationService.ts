@@ -48,7 +48,7 @@ export class CircleApplicationService {
         if (circle.getMembers().length >= 29) {
             throw new Error("Circle is full");
         }
-        circle.addMember(member);
+        circle.join(member);
         await this.circleRepository.save(circle);
     }
 }

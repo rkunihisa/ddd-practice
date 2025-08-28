@@ -39,7 +39,16 @@ export class Circle {
         return this.members;
     }
 
-    addMember(user: User): void {
-        this.members.push(user);
+    // addMember(user: User): void {
+    //     this.members.push(user);
+    // }
+    join(member: User): void{
+        if(member == null){
+            throw new Error("Member cannot be null or undefined");
+        }
+        if(this.members.length >= 29){
+            throw new Error("Circle is full");
+        }
+        this.members.push(member);
     }
 }
