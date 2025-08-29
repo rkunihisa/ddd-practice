@@ -2,6 +2,7 @@ import { UserId } from "./userId";
 import { UserName } from "./userName";
 import { Circle } from "../circle/circle";
 import type { CircleName } from "../circle/circleName";
+import type { UserNotificationInterface } from "./userNotificationInterface";
 
 export class User {
     private id: UserId;
@@ -35,5 +36,10 @@ export class User {
 
     createCircle(circleName: CircleName): Circle {
         return new Circle(this.id, circleName);
+    }
+
+    notify(notification: UserNotificationInterface): void {
+        notification.setId(this.id);
+        notification.setName(this.name);
     }
 }
