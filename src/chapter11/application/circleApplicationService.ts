@@ -44,11 +44,10 @@ export class CircleApplicationService {
         if (circle === null) {
             throw new Error("Circle not found");
         }
-        // サークルのオーナー含めて30名まで
-        if (circle.getMembers().length >= 29) {
+        if (circle.isFull()) {
             throw new Error("Circle is full");
         }
-        circle.addMember(member);
+        circle.addMember(memberId);
         await this.circleRepository.save(circle);
     }
 }
