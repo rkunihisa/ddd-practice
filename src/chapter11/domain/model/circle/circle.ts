@@ -42,4 +42,8 @@ export class Circle {
     addMember(user: UserId): void {
         this.members.push(user);
     }
+
+    isFull(): boolean {
+        return this.members.length + 1 >= 30;
+    }
 }
