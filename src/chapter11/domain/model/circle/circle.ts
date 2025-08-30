@@ -1,24 +1,24 @@
-import { User } from "../user/user";
 import { CircleName } from "./circleName";
 import { CircleId } from "./circleId";
+import { UserId } from "../user/userId";
 
 export class Circle {
     constructor(
         private circleId: CircleId,
         private circleName: CircleName,
-        private userId: User,
-        private members: User[] = []
+        private userId: UserId,
+        private members: UserId[] = []
     ) {
-        if(circleId == null){
+        if (circleId == null) {
             throw new Error("CircleId cannot be null or undefined");
         }
-        if(circleName == null){
+        if (circleName == null) {
             throw new Error("CircleName cannot be null or undefined");
         }
-        if(userId == null){
+        if (userId == null) {
             throw new Error("UserId cannot be null or undefined");
         }
-        if(members == null){
+        if (members == null) {
             throw new Error("Members cannot be null or undefined");
         }
     }
@@ -31,15 +31,15 @@ export class Circle {
         return this.circleName;
     }
 
-    getUserId(): User {
+    getUserId(): UserId {
         return this.userId;
     }
 
-    getMembers(): User[] {
+    getMembers(): UserId[] {
         return this.members;
     }
 
-    addMember(user: User): void {
+    addMember(user: UserId): void {
         this.members.push(user);
     }
 }
