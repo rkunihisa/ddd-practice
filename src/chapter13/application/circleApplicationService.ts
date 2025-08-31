@@ -7,6 +7,7 @@ import type { CircleCreateCommand } from "./circleCreateCommand";
 import { UserId } from "../domain/model/user/userId";
 import { CircleId } from "../domain/model/circle/circleId";
 import type { CircleJoinCommand } from "./circleJoinCommand";
+import { CircleFullSpecification } from "../domain/service/circleFullSpecification";
 
 export class CircleApplicationService {
     constructor(
@@ -40,12 +41,8 @@ export class CircleApplicationService {
             throw new Error("Circle not found");
         }
 
-        const users = await this.userRepository.find(circle.getMembers());
-
-        const premiumUserNumber = users.filter(user => user.isPremium()).length;
-        const circleUpperLimit = premiumUserNumber < 10 ? 30 : 50;
-
-        if (circle.getMembers().length >= circleUpperLimit) {
+        const circleFullSpecification = new CircleFullSpecification(this.userRepository);
+        if (!await circleFullSpecification.isSatisfiedBy(circle)) {
             throw new Error("Circle member limit reached");
         }
 
