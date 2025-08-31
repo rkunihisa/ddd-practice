@@ -1,6 +1,6 @@
 import { User } from "../domain/model/user/user";
 import type { UserId } from "../domain/model/user/userId";
-import type { UserRepositoryInterface } from "../domain/model/userRepositoryInterface";
+import type { UserRepositoryInterface } from "../domain/model/user/userRepositoryInterface";
 import { UserDataModelBuilder } from "../domain/service/userDataModelBuilder";
 
 export class EFUserRepository implements UserRepositoryInterface {

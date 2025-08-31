@@ -1,10 +1,10 @@
 import type { CircleFactoryInterface } from "../domain/model/circle/circleFactoryInterface";
 import { CircleName } from "../domain/model/circle/circleName";
 import type { CircleRepositoryInterface } from "../domain/model/circle/circleRepositoryInterface";
-import type { UserRepositoryInterface } from "../domain/model/userRepositoryInterface";
+import type { UserRepositoryInterface } from "../domain/model/user/userRepositoryInterface";
 import type { CircleService } from "../domain/service/circleService";
 import type { CircleCreateCommand } from "./circleCreateCommand";
-import {UserId} from "../domain/model/user/userId";
+import { UserId } from "../domain/model/user/userId";
 import { CircleId } from "../domain/model/circle/circleId";
 import type { CircleJoinCommand } from "./circleJoinCommand";
 
@@ -33,21 +33,22 @@ export class CircleApplicationService {
     }
 
     async join(command: CircleJoinCommand): Promise<void> {
-        const memberId = new UserId(command.getUserId());
-        const member = await this.userRepository.find(memberId);
-        if (member === null) {
-            throw new Error("User not found");
-        }
 
-        const id = new CircleId(command.getCircleId());
-        const circle = await this.circleRepository.find(id);
+        const circleId = new CircleId(command.getCircleId());
+        const circle = await this.circleRepository.find(circleId);
         if (circle === null) {
             throw new Error("Circle not found");
         }
-        // サークルのオーナー含めて30名まで
-        if (circle.getMembers().length >= 29) {
-            throw new Error("Circle is full");
+
+        const users = await this.userRepository.find(circle.getMembers());
+
+        const premiumUserNumber = users.filter(user => user.isPremium()).length;
+        const circleUpperLimit = premiumUserNumber < 10 ? 30 : 50;
+
+        if (circle.getMembers().length >= circleUpperLimit) {
+            throw new Error("Circle member limit reached");
         }
+
         circle.join(member);
         await this.circleRepository.save(circle);
     }

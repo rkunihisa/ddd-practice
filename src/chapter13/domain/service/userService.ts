@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { User } from '../model/user/user';
-import type { UserRepositoryInterface } from '../model/userRepositoryInterface';
+import type { UserRepositoryInterface } from '../model/user/userRepositoryInterface';
 
 @injectable()
 export class UserService {
