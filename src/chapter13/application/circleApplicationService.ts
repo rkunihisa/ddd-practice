@@ -8,6 +8,7 @@ import { UserId } from "../domain/model/user/userId";
 import { CircleId } from "../domain/model/circle/circleId";
 import type { CircleJoinCommand } from "./circleJoinCommand";
 import { CircleFullSpecification } from "../domain/service/circleFullSpecification";
+import { CircleRecommendSpecification } from "../domain/service/circleRecommendSpecification";
 
 export class CircleApplicationService {
     constructor(
@@ -49,4 +50,11 @@ export class CircleApplicationService {
         circle.join(member);
         await this.circleRepository.save(circle);
     }
-}
+
+    async getRecommended(request: CircleGetRecommendedRequest): Promise<CircleGetRecommendResult> {
+        const recommendCircleSpec = new CircleRecommendSpecification(new Date());
+
+        const circles = await this.circleFactory.findAll();
+        const recommendedCircles = circles.filter(circle => recommendCircleSpec.isSatisfiedBy(circle));
+        return new CircleGetRecommendResult(recommendedCircles);
+    }
