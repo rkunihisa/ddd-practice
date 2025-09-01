@@ -7,18 +7,19 @@ export class Circle {
         private circleId: CircleId,
         private circleName: CircleName,
         private userId: User,
-        private members: User[] = []
+        private members: User[] = [],
+        private createdAt: Date
     ) {
-        if(circleId == null){
+        if (circleId == null) {
             throw new Error("CircleId cannot be null or undefined");
         }
-        if(circleName == null){
+        if (circleName == null) {
             throw new Error("CircleName cannot be null or undefined");
         }
-        if(userId == null){
+        if (userId == null) {
             throw new Error("UserId cannot be null or undefined");
         }
-        if(members == null){
+        if (members == null) {
             throw new Error("Members cannot be null or undefined");
         }
     }
@@ -39,15 +40,23 @@ export class Circle {
         return this.members;
     }
 
-    isFull(): boolean {
-        return this.members.length >= 29;
+    getCreatedAt(): Date {
+        return this.createdAt;
     }
 
-    join(member: User): void{
-        if(member == null){
+    isFull(): boolean {
+        return this.countMembers() >= 29;
+    }
+
+    countMembers(): number {
+        return this.members.length;
+    }
+
+    join(member: User): void {
+        if (member == null) {
             throw new Error("Member cannot be null or undefined");
         }
-        if(this.isFull()){
+        if (this.isFull()) {
             throw new Error("Circle is full");
         }
         this.members.push(member);

@@ -6,4 +6,5 @@ export interface CircleRepositoryInterface {
     save(circle: Circle): Promise<void>;
     find(circleId: CircleId): Promise<Circle | null>;
     find(circleName: CircleName): Promise<Circle | null>;
+    findRecommended(now: Date): Circle[];
 }
