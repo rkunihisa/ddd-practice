@@ -1,0 +1,52 @@
+services:
+  db:
+    image: 'mariadb:latest'
+    container_name: 'mariadb'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+      MYSQL_DATABASE: 'wordpress'
+      MYSQL_USER: 'wordpress'
+      MYSQL_PASSWORD: 'wordpress'
+    volumes:
+      - mysql-vol:/var/lib/mysql
+    networks:
+      mynet:
+        ipv4_address: 172.25.0.3
+
+  wordpress:
+    depends_on:
+      - db
+    image: 'wordpress:latest'
+    container_name: 'wordpress'
+    volumes:
+      - wordpress-vol:/var/www/html
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: 'db:3306'
+      WORDPRESS_DB_USER: 'wordpress'
+      WORDPRESS_DB_PASSWORD: 'wordpress'
+    ports:
+      - '8080:80'
+    networks:
+      mynet:
+        ipv4_address: 172.25.0.2
+
+volumes:
+  mysql-vol:
+    driver_opts:
+      type: 'none'
+      device: /home/kunihisa/90_work/ddd-practice/src/docker/data/mysql
+      o: 'bind'
+  wordpress-vol:
+    driver_opts:
+      type: 'none'
+      device: /home/kunihisa/90_work/ddd-practice/src/docker/data/html
+      o: 'bind'
+
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/24
